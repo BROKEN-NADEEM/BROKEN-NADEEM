@@ -13,7 +13,7 @@ def clear_screen():
 
 def dynamic_logo():
     clear_screen()
-    # Stylish Cyber-Hacker "BROKEN" Logo
+    # High-end Cyber "BROKEN" Banner
     logo = f"""
 {Fore.GREEN} █▀▄▀█ ▄▀█ ▀█▀ █▀█ █▀█ ▀▄▀   ▄▀█ █▄░█ █ █▀▄▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
 {Fore.GREEN} █░▀░█ █▀█ ░█░ █▀▄ █▄█ █░█   █▀█ █░▀█ █ █░▀░█ █▀█ ░█░ █ █▄█ █░▀█
@@ -25,14 +25,14 @@ def dynamic_logo():
 
 def matrix_loading_animation():
     dynamic_logo()
-    print(Fore.GREEN + "[*] CONNECTING TO SECURE GATEWAY...")
+    print(Fore.GREEN + "[*] ACCESSING CORE TELECOM GATEWAY...")
     time.sleep(0.5)
     
     sequences = [
-        "[✓] IP OVERRIDE: SUCCESSFUL",
-        "[✓] EXTRACTING METADATA DICTIONARY",
-        "[✓] BYPASSING TELECOM OPERATOR FIREWALL",
-        "[✓] PACKETS SYNCHRONIZED WITH SATELLITE"
+        "[✓] OVERRIDING BASE STATION CONTROLLER",
+        "[✓] FETCHING PUBLIC REGISTRATION RECORDS",
+        "[✓] EXTRACTING CELLULAR BROADCAST DATA",
+        "[✓] PACKETS SYNCHRONIZED WITH NODE-B"
     ]
     
     for seq in sequences:
@@ -40,33 +40,33 @@ def matrix_loading_animation():
         sys.stdout.flush()
         time.sleep(0.3)
         
-    print(Fore.GREEN + "\n[*] INJECTING INJECTION PAYLOAD: ", end="")
+    print(Fore.GREEN + "\n[*] COMPILING TARGET REPORT: ", end="")
     for _ in range(25):
         sys.stdout.write(Fore.GREEN + "█")
         sys.stdout.flush()
         time.sleep(0.03)
-    print(Fore.LIGHTGREEN_EX + " [READY]")
+    print(Fore.LIGHTGREEN_EX + " [SUCCESS]")
     time.sleep(0.5)
 
 def main_tracker():
     dynamic_logo()
     
-    print(Fore.GREEN + "┌──(Enter Phone Number | e.g. +91xxxxxxxxx or 91xxxxxxxxx)")
+    print(Fore.GREEN + "┌──(ENTER TARGET NUMBER | E.G. +91xxxxxxxxx OR 91xxxxxxxxx)")
     target_num = input(Fore.GREEN + "└─> " + Fore.WHITE).strip()
     
     if not target_num:
-        print(Fore.RED + "\n[-] ERROR: Number cannot be empty!")
+        print(Fore.RED + "\n[-] ERROR: NUMBER CANNOT BE EMPTY!")
         return
 
-    # AUTO-FIX: Agar user '+' lagana bhool jaye toh automatic add karega
+    # Auto Plus Fix
     if not target_num.startswith('+'):
         target_num = '+' + target_num
 
     try:
-        # Running the full matrix layout animation
+        # Running loading sequence
         matrix_loading_animation()
         
-        # Parse & Analyze Data
+        # Parse Data
         parsed_data = phonenumbers.parse(target_num, None)
         
         if not phonenumbers.is_valid_number(parsed_data):
@@ -74,29 +74,37 @@ def main_tracker():
             print(Fore.RED + f"\n[-] ERROR: THE NUMBER {target_num} IS INVALID.")
             return
 
-        # Fetching data strings
+        # Fetching legitimate public telecom info
         country = geocoder.description_for_number(parsed_data, "en")
         operator = carrier.name_for_number(parsed_data, "en")
         tz_list = timezone.time_zones_for_number(parsed_data)
         tz = tz_list[0] if tz_list else "N/A"
         
-        # Clean Compact Thin UI Box Output
+        # Converting outputs to upper case for formatting
+        country_upper = country.upper() if country else "UNKNOWN"
+        operator_upper = operator.upper() if operator else "UNKNOWN"
+        tz_upper = tz.upper()
+
+        # Clean Compact Thin UI Box Output with CAPITAL headings
         dynamic_logo()
         print(Fore.GREEN + " ┌────────────────────────────────────────┐")
-        print(Fore.GREEN + " │        TARGET DATA EXTRACTION          │")
+        print(Fore.GREEN + " │         CRITICAL TARGET REPORT         │")
         print(Fore.GREEN + " ├────────────────────────────────────────┤")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Country/Region : " + Fore.WHITE + f"{country:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Carrier (Sim)  : " + Fore.WHITE + f"{operator if operator else 'Unknown':<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Timezone       : " + Fore.WHITE + f"{tz:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Network Status : " + Fore.LIGHTGREEN_EX + f"{'ONLINE':<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "USER NAME      : " + Fore.YELLOW + f"{'RESTRICTED (PRIVACY)':<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "FATHER NAME    : " + Fore.YELLOW + f"{'RESTRICTED (PRIVACY)':<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "HOME REGION    : " + Fore.WHITE + f"{country_upper:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "DISTRICT/JILA  : " + Fore.WHITE + f"{country_upper:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "OPERATOR (SIM) : " + Fore.WHITE + f"{operator_upper:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "CURRENT ZONE   : " + Fore.WHITE + f"{tz_upper:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "NETWORK STATUS : " + Fore.LIGHTGREEN_EX + f"{'ONLINE':<21}" + Fore.GREEN + " │")
         print(Fore.GREEN + " └────────────────────────────────────────┘")
         
-        print(Fore.YELLOW + "\n [!] Note: Exact real-time GPS coordinates require device tracking access.")
+        print(Fore.YELLOW + "\n [!] NOTE: PERSONAL DATA (NAME/FATHER) & EXACT LIVE LOCATION")
+        print(Fore.YELLOW + "     ARE PROTECTED BY LAW AND NOT STORED IN PUBLIC APIS.")
 
     except Exception as error:
         dynamic_logo()
-        print(Fore.RED + f"\n[-] SYSTEM EXCEPTION: {str(error)}")
-        print(Fore.YELLOW + "[*] Tip: Make sure to include the correct country code digits.")
+        print(Fore.RED + f"\n[-] SYSTEM EXCEPTION: {str(error).upper()}")
 
 if __name__ == "__main__":
     main_tracker()
