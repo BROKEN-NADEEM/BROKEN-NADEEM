@@ -5,74 +5,98 @@ import phonenumbers
 from phonenumbers import geocoder, carrier, timezone
 from colorama import init, Fore, Style
 
-# Initialize Colorama for neon style
+# Initialize color system
 init(autoreset=True)
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def hacker_banner():
+def dynamic_logo():
     clear_screen()
-    print(Fore.GREEN + Style.BRIGHT + """
- █▄▄ █▀█ █▀█ █▄▀ █▀▀ █▄░█   █▄░█ ▄▀█ █▀▄ █▀▀ █▀▀ █▀▄▀█
- █▄█ █▀▄ █▄█ █░█ ██▄ █░▀█   █░▀█ █▀█ █▄▀ ██▄ ██▄ █░▀░█
- ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀   ▀▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀ ▀░░░▀
- ─────────────────────────────────────────────────────
-         [+] SYSTEM: ONLINE | AUTH: BROKEN NADEEM [+]
- ─────────────────────────────────────────────────────
-    """)
+    # Stylish Cyber-Hacker "BROKEN" Logo
+    logo = f"""
+{Fore.GREEN} █▀▄▀█ ▄▀█ ▀█▀ █▀█ █▀█ ▀▄▀   ▄▀█ █▄░█ █ █▀▄▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
+{Fore.GREEN} █░▀░█ █▀█ ░█░ █▀▄ █▄█ █░█   █▀█ █░▀█ █ █░▀░█ █▀█ ░█░ █ █▄█ █░▀█
+{Fore.GREEN} ─────────────────────────────────────────────────────────────
+{Fore.CYAN}       [+] SYSTEM: ACTIVE  |  [+] CODED BY: BROKEN NADEEM
+{Fore.GREEN} ─────────────────────────────────────────────────────────────
+    """
+    print(logo)
 
-def scan_animation():
-    print(Fore.GREEN + "\n[*] INITIALIZING SATELLITE LINK...")
-    time.sleep(1)
-    sys.stdout.write(Fore.CYAN + "[*] FETCHING CARRIER DATA: ")
-    for _ in range(20):
-        sys.stdout.write("█")
+def matrix_loading_animation():
+    dynamic_logo()
+    print(Fore.GREEN + "[*] CONNECTING TO SECURE GATEWAY...")
+    time.sleep(0.5)
+    
+    sequences = [
+        "[✓] IP OVERRIDE: SUCCESSFUL",
+        "[✓] EXTRACTING METADATA DICTIONARY",
+        "[✓] BYPASSING TELECOM OPERATOR FIREWALL",
+        "[✓] PACKETS SYNCHRONIZED WITH SATELLITE"
+    ]
+    
+    for seq in sequences:
+        sys.stdout.write(Fore.LIGHTBLACK_EX + f" {seq}\n")
         sys.stdout.flush()
-        time.sleep(0.05)
-    print(Fore.GREEN + " [SUCCESS]")
+        time.sleep(0.3)
+        
+    print(Fore.GREEN + "\n[*] INJECTING INJECTION PAYLOAD: ", end="")
+    for _ in range(25):
+        sys.stdout.write(Fore.GREEN + "█")
+        sys.stdout.flush()
+        time.sleep(0.03)
+    print(Fore.LIGHTGREEN_EX + " [READY]")
     time.sleep(0.5)
 
-def track_number():
-    hacker_banner()
+def main_tracker():
+    dynamic_logo()
     
-    # Input with style
-    print(Fore.GREEN + "┌──(Enter Target Number with Country Code, e.g., +91xxxxxxxxx)")
-    raw_number = input(Fore.GREEN + "└─> " + Fore.WHITE)
+    print(Fore.GREEN + "┌──(Enter Phone Number | e.g. +91xxxxxxxxx or 91xxxxxxxxx)")
+    target_num = input(Fore.GREEN + "└─> " + Fore.WHITE).strip()
     
-    if not raw_number.strip():
-        print(Fore.RED + "\n[-] Error: Number cannot be empty!")
+    if not target_num:
+        print(Fore.RED + "\n[-] ERROR: Number cannot be empty!")
         return
 
+    # AUTO-FIX: Agar user '+' lagana bhool jaye toh automatic add karega
+    if not target_num.startswith('+'):
+        target_num = '+' + target_num
+
     try:
-        scan_animation()
+        # Running the full matrix layout animation
+        matrix_loading_animation()
         
-        # Parsing number
-        parsed_num = phonenumbers.parse(raw_number, None)
+        # Parse & Analyze Data
+        parsed_data = phonenumbers.parse(target_num, None)
         
-        if not phonenumbers.is_valid_number(parsed_num):
-            print(Fore.RED + "\n[-] ERROR: INVALID TARGET NUMBER.")
+        if not phonenumbers.is_valid_number(parsed_data):
+            dynamic_logo()
+            print(Fore.RED + f"\n[-] ERROR: THE NUMBER {target_num} IS INVALID.")
             return
 
-        # Fetching Information
-        country_location = geocoder.description_for_number(parsed_num, "en")
-        service_provider = carrier.name_for_number(parsed_num, "en")
-        time_zones = timezone.time_zones_for_number(parsed_num)
-
-        # Display Results in a compact, clean layout
-        print(Fore.GREEN + "\n ┌─────────────────────────────────────────┐")
-        print(Fore.GREEN + " │           TARGET INFO EXTRACTED         │")
-        print(Fore.GREEN + " ├─────────────────────────────────────────┤")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Country/State : " + Fore.WHITE + f"{country_location:<23}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Carrier (Sim) : " + Fore.WHITE + f"{service_provider if service_provider else 'Unknown':<23}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Timezone      : " + Fore.WHITE + f"{time_zones[0]:<23}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "Status        : " + Fore.LIGHTGREEN_EX + f"{'ACTIVE':<23}" + Fore.GREEN + " │")
-        print(Fore.GREEN + " └─────────────────────────────────────────┘")
+        # Fetching data strings
+        country = geocoder.description_for_number(parsed_data, "en")
+        operator = carrier.name_for_number(parsed_data, "en")
+        tz_list = timezone.time_zones_for_number(parsed_data)
+        tz = tz_list[0] if tz_list else "N/A"
         
-        print(Fore.YELLOW + "\n[!] Note: Real-time exact GPS location requires device permission or GPS logs.")
+        # Clean Compact Thin UI Box Output
+        dynamic_logo()
+        print(Fore.GREEN + " ┌────────────────────────────────────────┐")
+        print(Fore.GREEN + " │        TARGET DATA EXTRACTION          │")
+        print(Fore.GREEN + " ├────────────────────────────────────────┤")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "Country/Region : " + Fore.WHITE + f"{country:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "Carrier (Sim)  : " + Fore.WHITE + f"{operator if operator else 'Unknown':<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "Timezone       : " + Fore.WHITE + f"{tz:<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + f" │ " + Fore.CYAN + "Network Status : " + Fore.LIGHTGREEN_EX + f"{'ONLINE':<21}" + Fore.GREEN + " │")
+        print(Fore.GREEN + " └────────────────────────────────────────┘")
+        
+        print(Fore.YELLOW + "\n [!] Note: Exact real-time GPS coordinates require device tracking access.")
 
-    except Exception as e:
-        print(Fore.RED + f"\n[-] AN ERROR OCCURRED: {str(e)}")
+    except Exception as error:
+        dynamic_logo()
+        print(Fore.RED + f"\n[-] SYSTEM EXCEPTION: {str(error)}")
+        print(Fore.YELLOW + "[*] Tip: Make sure to include the correct country code digits.")
 
 if __name__ == "__main__":
-    track_number()
+    main_tracker()
