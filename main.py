@@ -13,7 +13,6 @@ def clear_screen():
 
 def dynamic_logo():
     clear_screen()
-    # High-end Cyber "BROKEN" Banner
     logo = f"""
 {Fore.GREEN} █▀▄▀█ ▄▀█ ▀█▀ █▀█ █▀█ ▀▄▀   ▄▀█ █▄░█ █ █▀▄▀█ ▄▀█ ▀█▀ █ █▀█ █▄░█
 {Fore.GREEN} █░▀░█ █▀█ ░█░ █▀▄ █▄█ █░█   █▀█ █░▀█ █ █░▀░█ █▀█ ░█░ █ █▄█ █░▀█
@@ -48,17 +47,28 @@ def matrix_loading_animation():
     print(Fore.LIGHTGREEN_EX + " [SUCCESS]")
     time.sleep(0.5)
 
+def stylish_upper_box(title, data_dict):
+    """Print a fully uppercase, stylish report box"""
+    print(Fore.GREEN + " ╔══════════════════════════════════════════════════╗")
+    print(Fore.GREEN + " ║" + Fore.CYAN + f" {title.upper():^46}" + Fore.GREEN + "║")
+    print(Fore.GREEN + " ╠══════════════════════════════════════════════════╣")
+    for key, value in data_dict.items():
+        key_upper = key.upper()
+        val_upper = str(value).upper()
+        print(Fore.GREEN + f" ║ {Fore.CYAN}{key_upper:<14}{Fore.GREEN}: {Fore.WHITE}{val_upper:<29}{Fore.GREEN}║")
+    print(Fore.GREEN + " ╚══════════════════════════════════════════════════╝")
+
 def main_tracker():
     dynamic_logo()
     
-    print(Fore.GREEN + "┌──(ENTER TARGET NUMBER | E.G. +91xxxxxxxxx OR 91xxxxxxxxx)")
+    print(Fore.GREEN + "┌──(ENTER TARGET NUMBER | E.G. +91XXXXXXXXXX OR 91XXXXXXXXXX)")
     target_num = input(Fore.GREEN + "└─> " + Fore.WHITE).strip()
     
     if not target_num:
         print(Fore.RED + "\n[-] ERROR: NUMBER CANNOT BE EMPTY!")
         return
 
-    # Auto Plus Fix
+    # Auto-add plus sign
     if not target_num.startswith('+'):
         target_num = '+' + target_num
 
@@ -66,7 +76,7 @@ def main_tracker():
         # Running loading sequence
         matrix_loading_animation()
         
-        # Parse Data
+        # Parse phone number
         parsed_data = phonenumbers.parse(target_num, None)
         
         if not phonenumbers.is_valid_number(parsed_data):
@@ -74,33 +84,35 @@ def main_tracker():
             print(Fore.RED + f"\n[-] ERROR: THE NUMBER {target_num} IS INVALID.")
             return
 
-        # Fetching legitimate public telecom info
+        # Fetch real public telecom info
         country = geocoder.description_for_number(parsed_data, "en")
         operator = carrier.name_for_number(parsed_data, "en")
         tz_list = timezone.time_zones_for_number(parsed_data)
         tz = tz_list[0] if tz_list else "N/A"
         
-        # Converting outputs to upper case for formatting
+        # Convert to uppercase for stylish display
         country_upper = country.upper() if country else "UNKNOWN"
         operator_upper = operator.upper() if operator else "UNKNOWN"
         tz_upper = tz.upper()
 
-        # Clean Compact Thin UI Box Output with CAPITAL headings
+        # Prepare all data fields (personal ones are privacy protected)
+        report_data = {
+            "USER NAME": "🔒 RESTRICTED (PRIVACY)",
+            "FATHER NAME": "🔒 RESTRICTED (PRIVACY)",
+            "HOME DISTRICT": "🔒 RESTRICTED (PRIVACY)",
+            "CURRENT LOCATION": "🔒 RESTRICTED (PRIVACY)",
+            "COUNTRY/REGION": country_upper,
+            "SIM OPERATOR": operator_upper,
+            "TIME ZONE": tz_upper,
+            "NETWORK STATUS": "ONLINE"
+        }
+
         dynamic_logo()
-        print(Fore.GREEN + " ┌────────────────────────────────────────┐")
-        print(Fore.GREEN + " │         CRITICAL TARGET REPORT         │")
-        print(Fore.GREEN + " ├────────────────────────────────────────┤")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "USER NAME      : " + Fore.YELLOW + f"{'RESTRICTED (PRIVACY)':<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "FATHER NAME    : " + Fore.YELLOW + f"{'RESTRICTED (PRIVACY)':<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "HOME REGION    : " + Fore.WHITE + f"{country_upper:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "DISTRICT/JILA  : " + Fore.WHITE + f"{country_upper:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "OPERATOR (SIM) : " + Fore.WHITE + f"{operator_upper:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "CURRENT ZONE   : " + Fore.WHITE + f"{tz_upper:<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + f" │ " + Fore.CYAN + "NETWORK STATUS : " + Fore.LIGHTGREEN_EX + f"{'ONLINE':<21}" + Fore.GREEN + " │")
-        print(Fore.GREEN + " └────────────────────────────────────────┘")
+        stylish_upper_box("CRITICAL TARGET REPORT", report_data)
         
-        print(Fore.YELLOW + "\n [!] NOTE: PERSONAL DATA (NAME/FATHER) & EXACT LIVE LOCATION")
-        print(Fore.YELLOW + "     ARE PROTECTED BY LAW AND NOT STORED IN PUBLIC APIS.")
+        print(Fore.YELLOW + "\n ⚠️  NOTE: PERSONAL DATA (NAME/FATHER/EXACT LOCATION) IS PROTECTED BY LAW")
+        print(Fore.YELLOW + "     AND NOT STORED IN PUBLIC APIS. THE ABOVE PRIVATE FIELDS ARE")
+        print(Fore.YELLOW + "     SHOWN AS RESTRICTED FOR LEGAL & ETHICAL REASONS.")
 
     except Exception as error:
         dynamic_logo()
